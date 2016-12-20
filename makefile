@@ -11,8 +11,9 @@ obj = $(patsubst %.c, %.o, $(src))
 echo = echo
 fdfs_upload_test=fdfs_test
 data_cgi = data
+upload_cgi = upload
 
-target=$(fdfs_upload_test) $(echo) $(data_cgi)
+target=$(fdfs_upload_test) $(echo) $(data_cgi) $(upload_cgi)
 
 ALL:$(target)
 
@@ -30,6 +31,9 @@ $(fdfs_upload_test):./test/fdfs_upload_test.o make_log.o
 
 #data程序
 $(data_cgi):data_cgi.o make_log.o 
+	$(CC) $^ -o $@ $(LIBS)
+
+$(upload_cgi):upload_cgi.o util_cgi.o make_log.o 
 	$(CC) $^ -o $@ $(LIBS)
 
 #将clean,ALL和distclean设置为伪目标
